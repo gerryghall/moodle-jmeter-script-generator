@@ -681,7 +681,7 @@ abstract class test_setup {
             FROM 
                 {course_modules} cm
             JOIN 
-                {' . $this->get_table_name() . '} mod
+                {' . $this->get_table_name() . '} module
             ON 
                 module.id = cm.instance
             JOIN 
