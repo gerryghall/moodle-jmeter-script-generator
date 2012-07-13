@@ -673,22 +673,37 @@ abstract class test_setup {
 
         $cms = $DB->get_records_sql('
             SELECT
-                cm.id           AS cmid,
-                mod.name        AS name,
-                mod.id          AS id,
-                course.fullname AS course_name,
-                course.id       AS course_id
-            FROM {course_modules} cm
-            JOIN {' . $this->get_table_name() . '} mod
-            ON mod.id = cm.instance
-            JOIN {course} course
-            ON course.id = cm.course
-            JOIN {modules} modules
-            ON cm.module = modules.id
-            WHERE cm.visible = 1
-            AND cm.course = ?
-            AND modules.name = ?
-            ', array($course, $this->get_name()));
+                cm.id               AS cmid,
+                module.name         AS name,
+                module.id           AS id,
+                course.fullname     AS course_name,
+                course.id           AS course_id
+            FROM 
+                {course_modules} cm
+            JOIN 
+                {' . $this->get_table_name() . '} mod
+            ON 
+                module.id = cm.instance
+            JOIN 
+                {course} course
+            ON 
+                course.id = cm.course
+            JOIN 
+                {modules} modules
+            ON 
+                cm.module = modules.id
+            WHERE 
+                cm.visible = 1
+            AND 
+                cm.course = ?
+            AND 
+                modules.name = ?', 
+        array(
+            $course, 
+            $this->get_name()
+            )
+        );
+
         return $cms;
     }
 
